@@ -7,21 +7,10 @@ James Shen <jamesjieranshen@gmail.com>
 - In order to get autonomously get a kerberos ticket (and therefore get `kx509`
   and `voms` working out of box), you will need to setup a kerberos keytab, and
   make sure that the Dockerfile correctly points to it.
+- To allow X11 forwarding to your desktop, you need to [mount the x11 socket to the docker as well](https://www.cloudsavvyit.com/10520/how-to-run-gui-applications-in-a-docker-container/). I did not have any issues with XAuth, but this may vary based depending on the system you are running.
+- I see no need of setting up VNC, as the latency issue of X11 is not huge when there is no network involved, but setting it up is also possible.
 
-I use the following script to start the docker:
-
-```
-#!/bin/bash
-# disable build if nothing is changed...
-docker build -t sl7 $WORK/hep/sl7
-echo "Entering Docker... run `source setup_lar` to setup all environment variables"
-docker run -it --rm --name sl7 \
-    -v $WORK/hep:/work \
-    -v /cvmfs:/cvmfs \
-    --user="1000:1000"\
-    sl7 bash
-
-```
+Run `docker-compose build sl7` to build the docker. Afterwards, use `docker-compose run --rm sl7 bash` to get in a shell. Run `source setup_lar` to complete setup by running `init.sh`. This file's content should be similar to the `bashrc` commands on a gpvm.
 
 ## References:
 
