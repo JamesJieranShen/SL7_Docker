@@ -1,0 +1,14 @@
+#!/bin/bash
+# kx509 - get an X.509 certificate for Fermilab using kerberos
+
+if [ "$1" = "-?" ] || [ "$1" = "-h" ]; then
+    echo "Usage: kx509 [-?|-h] [cigetcert_options]" >&2
+    echo " -? or -h prints this message and exits" >&2
+    echo " Otherwise, invokes cigetcert with options for Fermilab kerberos" >&2
+    exit
+fi
+EXTRA=""
+if [ -n "$X509_USER_PROXY" ]; then
+    EXTRA="$EXTRA -o $X509_USER_PROXY"
+fi
+exec cigetcert $EXTRA -i 'Fermi National Accelerator Laboratory' -n "$@"
