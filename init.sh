@@ -19,6 +19,7 @@ shopt -s direxpand
 
 # Improve default ll alias
 alias ll='ls -lah --color=auto'
+alias ls='ls --color=auto'
 
 case "$TERM" in
     xterm-color|*-256color) color_prompt=yes;;
@@ -26,3 +27,6 @@ esac
 eval `dircolors /entry/dircolors`
 export PS1="\[\e[35m\][\[\e[m\]\[\e[35m\]SL7Docker\[\e[m\]\[\e[35m\]]\[\e[m\]\[\e[34m\]\w\[\e[m\]: "
 source /cvmfs/dune.opensciencegrid.org/products/dune/setup_dune.sh
+setup mrb -o
+source /work/dune_lar/localProducts_larsoft_v09_29_00_e20_prof/setup
+mrbslp

@@ -31,10 +31,11 @@ RUN yum install -y --setopt=tsflags=nodocs \
  && yum -y clean all
 COPY kx509 /usr/bin/kx509
 COPY krb5.conf /etc/krb5.conf
-COPY entrypoint.sh /entry
-COPY bashrc /entry/bashrc
-COPY dircolors.ansi-dark /entry/discolors
+COPY init.sh /usr/bin/setup_lar
+COPY dircolors.ansi-dark /entry/dircolors
 COPY jierans.keytab /entry
-ENTRYPOINT ["/entry/entrypoint.sh"]
-# CMD "/entry/entrypoint.sh"
-# CMD "/bin/bash"
+
+RUN kinit -kt /entry/jierans.keytab jierans@FNAL.GOV
+RUN kx509
+RUN voms-proxy-init -rfc -noregen -voms dune:/dune/Role=Analysis -valid 24:00
+ENTRYPOINT "/bin/bash"
