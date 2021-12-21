@@ -10,7 +10,12 @@ James Shen <jamesjieranshen@gmail.com>
 - To allow X11 forwarding to your desktop, you need to [mount the x11 socket to the docker as well](https://www.cloudsavvyit.com/10520/how-to-run-gui-applications-in-a-docker-container/). I did not have any issues with XAuth, but this may vary based depending on the system you are running.
 - I see no need of setting up VNC, as the latency issue of X11 is not huge when there is no network involved, but setting it up is also possible.
 
-Run `docker-compose build sl7` to build the docker. Afterwards, use `docker-compose run --rm sl7 bash` to get in a shell. Run `source setup_lar` to complete setup by running `init.sh`. This file's content should be similar to the `bashrc` commands on a gpvm.
+Run `docker-compose build sl7` to build the docker. Afterwards, use `docker-compose run --rm sl7 bash` to get in a shell. The provided `bashrc` sets up proxies, dune ups packages, etc., when an interactive bash session is called.
+
+## Setting Up Jupyter Notebook
+If you would like to use PyROOT for analysis, you need to install it into the shared home directory, as we typically use a version of python and pip set up in the cvmfs during runtime.
+
+When the docker is ran for the first time, do `pip install notebook` in a bash shell. This will install install the binaries to `~/.local/bin`, which is persistent in a mounted drive. This means subsequent docker instances can directly use this install.
 
 ## References:
 
